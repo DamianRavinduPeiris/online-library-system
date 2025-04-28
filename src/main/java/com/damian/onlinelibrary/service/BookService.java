@@ -10,4 +10,5 @@ public interface BookService {
     ResponseEntity<Response> getAvailableBooks();
     ResponseEntity<Response> getBooksByAuthor(String authorName);
     ResponseEntity<Response> getBooksByPublishedYear(String publishedYear);
+    ResponseEntity<Response> getAllBooks();
 }

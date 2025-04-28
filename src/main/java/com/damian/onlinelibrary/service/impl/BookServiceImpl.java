@@ -104,6 +104,18 @@ public class BookServiceImpl implements BookService {
         return buildAndSendResponse(HttpStatus.OK, message, bookDTOs);
     }
 
+    @Override
+    public ResponseEntity<Response> getAllBooks() {
+        var bookList = bookRepo.findAll();
+        if (bookList.isEmpty()) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books found!", null);
+        }
+        var bookDTOs = bookList.stream()
+                .map(b -> modelMapper.map(b, BookDTO.class))
+                .toList();
+        return buildAndSendResponse(HttpStatus.OK, "Books found!", bookDTOs);
+    }
+
     public ResponseEntity<Response> buildAndSendResponse(HttpStatus status, String message, Object data) {
         var response = new Response(status, message, data);
         return new ResponseEntity<>(response, status);

@@ -24,6 +24,11 @@ public class BookController {
         return bookService.searchBookByIdBook(bookId);
     }
 
+    @GetMapping(path = "/getAllBooks")
+    public ResponseEntity<Response> getAlBooks() {
+        return bookService.getAllBooks();
+    }
+
     @GetMapping(path = "/getAvailableBooks")
     public ResponseEntity<Response> searchAvailableBooks() {
         return bookService.getAvailableBooks();
