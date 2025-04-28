@@ -28,6 +28,36 @@ The goal of this project is to build an online library system that allows users 
 - **Borrow/Return Books**: Users can borrow and return available books.
 - **Borrow History**: Users can view their past borrowed books.
 
+# Security Configuration
+
+The application uses **Spring Security** to manage authentication and authorization for its APIs. Below is a summary of the key features of the security setup:
+
+### 1. CSRF Protection Disabled:
+For simplicity, **CSRF protection** has been disabled in this configuration.
+
+### 2. Endpoint Access Control:
+- **Public Access**: Endpoints under `/api/v1/books/**` are publicly accessible without authentication.
+- **Secured Access**: Endpoints under `/api/v1/users/**` require authentication.
+
+### 3. Authentication Method:
+- **Basic authentication** is used for securing APIs.
+
+### 4. User Roles:
+Predefined **in-memory users** with roles:
+- **User**: 
+  - Username: `user`
+  - Password: `password`
+  - Role: `USER`
+- **Admin**: 
+  - Username: `admin`
+  - Password: `admin`
+  - Role: `ADMIN`
+
+---
+
+This configuration ensures a separation of concerns and **role-based access control** for APIs, catering to both **public** and **secured** endpoints.
+
+
 ## API Endpoints
 
 ### User Controller
