@@ -24,6 +24,14 @@ public class BorrowRecordServiceImpl implements BorrowRecordService {
 
     @Override
     public ResponseEntity<Response> borrowBook(User user, Book book) {
+        var existingBorrowRecords = borrowRecordRepo.findByUser(user);
+        if (!existingBorrowRecords.isEmpty()) {
+            for (var record : existingBorrowRecords) {
+                if (record.getBook().getId().equals(book.getId()) && record.getUser().getId().equals(user.getId())) {
+                    return buildAndSendResponse(HttpStatus.NOT_FOUND, "Book already borrowed!", record);
+                }
+            }
+        }
         if (book.getAvailableCopies() > 0) {
             book.setAvailableCopies(book.getAvailableCopies() - 1);
             bookRepo.save(book);
