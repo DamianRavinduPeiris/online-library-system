@@ -67,15 +67,17 @@ public class BookServiceImpl implements BookService {
         }
 
         var bookDTOs = books.stream()
-                .filter(b -> b.getAvailableCopies() > 0)
                 .map(b -> modelMapper.map(b, BookDTO.class))
                 .toList();
 
-        if (bookDTOs.isEmpty()) {
-            return buildAndSendResponse(HttpStatus.NOT_FOUND, "Books by this author exist but no copies are available for borrowing!", null);
-        }
+        boolean hasUnavailableBooks = books.stream()
+                .anyMatch(b -> b.getAvailableCopies() == 0);
 
-        return buildAndSendResponse(HttpStatus.OK, "Books found by this author!", bookDTOs);
+        var message = hasUnavailableBooks
+                ? "Books found for this author, but some have no available copies for borrowing."
+                : "Books found by this author!";
+
+        return buildAndSendResponse(HttpStatus.OK, message, bookDTOs);
     }
 
 
@@ -88,19 +90,19 @@ public class BookServiceImpl implements BookService {
             return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books found published in this year!", null);
         }
 
-        boolean noCopiesAvailable = books.stream().anyMatch(b -> b.getAvailableCopies() == 0);
-
         var bookDTOs = books.stream()
                 .map(b -> modelMapper.map(b, BookDTO.class))
                 .toList();
 
-        var message = noCopiesAvailable
-                ? "Books found but some have no copies available for borrowing."
+        boolean hasUnavailableBooks = books.stream()
+                .anyMatch(b -> b.getAvailableCopies() == 0);
+
+        var message = hasUnavailableBooks
+                ? "Books found published in this year, but some have no available copies for borrowing."
                 : "Books found published in this year!";
 
         return buildAndSendResponse(HttpStatus.OK, message, bookDTOs);
     }
-
 
     public ResponseEntity<Response> buildAndSendResponse(HttpStatus status, String message, Object data) {
         var response = new Response(status, message, data);
