@@ -39,7 +39,7 @@ The application uses **Spring Security** to manage authentication and authorizat
 For simplicity, **CSRF protection** has been disabled in this configuration.
 
 ### 2. Endpoint Access Control:
-- **Public Access**: Endpoints under `/api/v1/books/**` are publicly accessible without authentication.
+- **Public Access**: Endpoints under `/api/v1/books/**` and `/api/v1/library/**` are publicly accessible without authentication.
 - **Secured Access**: Endpoints under `/api/v1/users/**` require authentication. (Refer below on how to access using Postman Basic Auth.The username is `user` & the password is `password`)
 
 ![image](https://github.com/user-attachments/assets/ef62fd6a-5f95-4172-9501-ff52882e53de)
@@ -112,17 +112,17 @@ This configuration ensures a separation of concerns and **role-based access cont
 
 ### Book Borrow Controller
 
-- **POST /api/v1/borrow/{userId}/{bookId}**
+- **POST /api/v1/library/borrow/{userId}/{bookId}**
   - Allows a user to borrow a book.
   - **Path variables**: `userId`, `bookId`
   - **Response**: Success or failure response.
 
-- **POST /api/v1/return/{userId}/{bookId}**
+- **POST /api/v1//library/return/{userId}/{bookId}**
   - Allows a user to return a borrowed book.
   - **Path variables**: `userId`, `bookId`
   - **Response**: Success or failure response.
 
-- **GET /api/v1/borrow/history/{userId}**
+- **GET /api/v1/library/borrow/history/{userId}**
   - Fetches the borrowing history of a user.
   - **Path variable**: `userId`
   - **Response**: List of borrowed books.
