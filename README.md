@@ -63,7 +63,7 @@ Predefined **in-memory users** with roles:
 This configuration ensures a separation of concerns and **role-based access control** for APIs, catering to both **public** and **secured** endpoints.
 
 
-## API Endpoints (Refer **`postman_collection.json`** in the project root.)
+## API Endpoints (Access the Postman Collection from <a href="https://www.postman.com/damianpeiris/online-library/collection/lgra81s/online-library-system?action=share&creator=27406561">here.</a> or Refer **`postman_collection.json`** in the project root.)
 
 ### User Controller
 
