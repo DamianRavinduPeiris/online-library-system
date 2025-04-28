@@ -17,6 +17,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/books/**").permitAll() // Allow access to book collection
+                .requestMatchers("/api/v1/library/**").permitAll() // Allow access to book collection
                 .requestMatchers("/api/v1/users/**").authenticated() // Secure User API
                 .and()
                 .httpBasic(); // Use basic authentication
