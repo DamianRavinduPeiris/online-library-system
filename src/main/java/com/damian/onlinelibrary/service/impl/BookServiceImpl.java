@@ -57,33 +57,50 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    /*This method returns the books by author.*/
+    /*This method returns the available books by author.*/
     @Override
     public ResponseEntity<Response> getBooksByAuthor(String authorName) {
-        var book = bookRepo.findByAuthor(authorName);
-        if (book.isEmpty()) {
+        var books = bookRepo.findByAuthor(authorName);
+
+        if (books.isEmpty()) {
             return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books found by this author!", null);
-        } else {
-            var bookDTOs = book.stream()
-                    .map(b -> modelMapper.map(b, BookDTO.class))
-                    .toList();
-            return buildAndSendResponse(HttpStatus.OK, "Books found by this author!", bookDTOs);
         }
+
+        var bookDTOs = books.stream()
+                .filter(b -> b.getAvailableCopies() > 0)
+                .map(b -> modelMapper.map(b, BookDTO.class))
+                .toList();
+
+        if (bookDTOs.isEmpty()) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "Books by this author exist but no copies are available for borrowing!", null);
+        }
+
+        return buildAndSendResponse(HttpStatus.OK, "Books found by this author!", bookDTOs);
     }
 
-    /*This method returns the books by published year.*/
+
+    /*This method returns the available books by published year.*/
     @Override
     public ResponseEntity<Response> getBooksByPublishedYear(String publishedYear) {
-        var book = bookRepo.findByPublishedYear(publishedYear);
-        if (book.isEmpty()) {
+        var books = bookRepo.findByPublishedYear(publishedYear);
+
+        if (books.isEmpty()) {
             return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books found published in this year!", null);
-        } else {
-            var bookDTOs = book.stream()
-                    .map(b -> modelMapper.map(b, BookDTO.class))
-                    .toList();
-            return buildAndSendResponse(HttpStatus.OK, "Books found published in this year!", bookDTOs);
         }
+
+        boolean noCopiesAvailable = books.stream().anyMatch(b -> b.getAvailableCopies() == 0);
+
+        var bookDTOs = books.stream()
+                .map(b -> modelMapper.map(b, BookDTO.class))
+                .toList();
+
+        var message = noCopiesAvailable
+                ? "Books found but some have no copies available for borrowing."
+                : "Books found published in this year!";
+
+        return buildAndSendResponse(HttpStatus.OK, message, bookDTOs);
     }
+
 
     public ResponseEntity<Response> buildAndSendResponse(HttpStatus status, String message, Object data) {
         var response = new Response(status, message, data);
