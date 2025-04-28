@@ -6,5 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserService {
     ResponseEntity<Response> registerUser(UserDTO userDTO);
+    ResponseEntity<Response> searchUserById(String userId);
 
 }
