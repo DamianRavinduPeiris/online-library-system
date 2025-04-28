@@ -2,10 +2,7 @@ package com.damian.onlinelibrary.service.impl;
 
 import com.damian.onlinelibrary.dto.BookDTO;
 import com.damian.onlinelibrary.entity.Book;
-import com.damian.onlinelibrary.entity.BorrowRecord;
-import com.damian.onlinelibrary.entity.User;
 import com.damian.onlinelibrary.repo.BookRepo;
-import com.damian.onlinelibrary.repo.BorrowRecordRepo;
 import com.damian.onlinelibrary.repo.UserRepo;
 import com.damian.onlinelibrary.response.Response;
 import com.damian.onlinelibrary.service.BookService;

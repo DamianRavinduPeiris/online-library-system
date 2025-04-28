@@ -45,11 +45,15 @@ public class BorrowRecordServiceImpl implements BorrowRecordService {
         if (!borrowRecords.isEmpty()) {
             for (var record : borrowRecords) {
                 if (record.getBook().getId().equals(book.getId()) && record.getUser().getId().equals(user.getId())) {
-                    book.setAvailableCopies(book.getAvailableCopies() + 1);
-                    bookRepo.save(book);
-                    record.setReturnedAt(String.valueOf(System.currentTimeMillis()));
-                    borrowRecordRepo.save(record);
-                    return buildAndSendResponse(HttpStatus.OK, "Book returned successfully", record);
+                    if (record.getReturnedAt() == null) {
+                        book.setAvailableCopies(book.getAvailableCopies() + 1);
+                        bookRepo.save(book);
+                        record.setBorrowedAt(null);
+                        record.setReturnedAt(String.valueOf(System.currentTimeMillis()));
+                        borrowRecordRepo.save(record);
+                        return buildAndSendResponse(HttpStatus.OK, "Book returned successfully", record);
+                    }
+                    return buildAndSendResponse(HttpStatus.NOT_FOUND, "Book already returned!", record);
                 }
             }
             return buildAndSendResponse(HttpStatus.NOT_FOUND, "No matching borrow record found for the given book and user.", null);
