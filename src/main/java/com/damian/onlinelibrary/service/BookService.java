@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface BookService {
     ResponseEntity<Response> registerBook(BookDTO bookDTO);
+    ResponseEntity<Response> searchBookByIdBook(String bookId);
     ResponseEntity<Response> getAvailableBooks();
     ResponseEntity<Response> getBooksByAuthor(String authorName);
     ResponseEntity<Response> getBooksByPublishedYear(String publishedYear);
