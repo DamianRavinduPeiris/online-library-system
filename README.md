@@ -40,11 +40,12 @@ For simplicity, **CSRF protection** has been disabled in this configuration.
 
 ### 2. Endpoint Access Control:
 - **Public Access**: Endpoints under `/api/v1/books/**` are publicly accessible without authentication.
-- **Secured Access**: Endpoints under `/api/v1/users/**` require authentication. (Refer below on how to access using Postman Basic Auth.)
-username : user
-password : password
+- **Secured Access**: Endpoints under `/api/v1/users/**` require authentication. (Refer below on how to access using Postman Basic Auth.The username is `user` & the password is `password`)
 
 ![image](https://github.com/user-attachments/assets/ef62fd6a-5f95-4172-9501-ff52882e53de)
+
+- If still getting **un-authorized** error make sure to check and add the **content-type** header to **application/json** in Postman.
+  ![image](https://github.com/user-attachments/assets/07feb8ab-ca2f-42e2-9317-7074afcc7101)
 
 ### 3. Authentication Method:
 - **Basic authentication** is used for securing APIs.
