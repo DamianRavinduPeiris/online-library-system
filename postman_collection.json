@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "1c2fd01b-6fdd-4546-8452-fa5c19550db0",
+		"name": "Online Library System.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27406561"
+	},
+	"item": [
+		{
+			"name": "User - POST",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"U005\",\r\n  \"name\": \"Damian\",\r\n  \"email\": \"johndoe@example.com\",\r\n  \"createdAt\": \"2025-04-28T10:15:30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/users/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book - POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"B200\",\r\n  \"title\": \"Introduction to HTML\",\r\n  \"author\": \"Ravindu\",\r\n  \"publishedYear\": \"2025\",\r\n  \"availableCopies\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/books/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Book by bookId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/books/searchBook/B200",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"searchBook",
+						"B200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllBooks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/books/getAllBooks",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"getAllBooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Available Books",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/books/getAvailableBooks",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"getAvailableBooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET books by Author",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/books/searchBook/author/Ravindu",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"searchBook",
+						"author",
+						"Ravindu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET books by Published Year",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/books/searchBook/year/2025",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"searchBook",
+						"year",
+						"2025"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrow a Book",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/library/borrow/U005/B200",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"library",
+						"borrow",
+						"U005",
+						"B200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return a Book.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/library/return/U005/B200",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"library",
+						"return",
+						"U005",
+						"B200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET past borrows of a user.",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/api/v1/library/borrow/history/U005",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"library",
+						"borrow",
+						"history",
+						"U005"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
