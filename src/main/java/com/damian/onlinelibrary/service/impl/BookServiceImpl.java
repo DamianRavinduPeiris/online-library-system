@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -122,11 +123,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<Response> borrowBook(String userId, String bookId) {
         return processBookTransaction(userId, bookId, BorrowType.BORROW);
     }
 
     @Override
+    @Transactional
     public ResponseEntity<Response> returnBook(String userId, String bookId) {
         return processBookTransaction(userId, bookId, BorrowType.RETURN);
     }
