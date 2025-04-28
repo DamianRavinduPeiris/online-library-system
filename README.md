@@ -30,6 +30,9 @@ The goal of this project is to build an online library system that allows users 
 
 # Security Configuration
 
+
+
+
 The application uses **Spring Security** to manage authentication and authorization for its APIs. Below is a summary of the key features of the security setup:
 
 ### 1. CSRF Protection Disabled:
@@ -37,7 +40,11 @@ For simplicity, **CSRF protection** has been disabled in this configuration.
 
 ### 2. Endpoint Access Control:
 - **Public Access**: Endpoints under `/api/v1/books/**` are publicly accessible without authentication.
-- **Secured Access**: Endpoints under `/api/v1/users/**` require authentication.
+- **Secured Access**: Endpoints under `/api/v1/users/**` require authentication. (Refer below on how to access using Postman Basic Auth.)
+username : user
+password : password
+
+![image](https://github.com/user-attachments/assets/ef62fd6a-5f95-4172-9501-ff52882e53de)
 
 ### 3. Authentication Method:
 - **Basic authentication** is used for securing APIs.
