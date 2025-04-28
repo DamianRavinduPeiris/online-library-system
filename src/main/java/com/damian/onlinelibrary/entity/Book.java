@@ -19,8 +19,8 @@ public class Book {
     private String id;
     private String title;
     private String author;
-    private String published_year;
-    private int available_copies;
+    private String publishedYear;
+    private int availableCopies;
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<BorrowRecord> borrowRecords;
 }

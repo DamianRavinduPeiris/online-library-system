@@ -28,4 +28,14 @@ public class BookController {
     public ResponseEntity<Response> searchAvailableBooks() {
         return bookService.getAvailableBooks();
     }
+
+    @GetMapping(path = "/searchBook/author/{authorName}")
+    public ResponseEntity<Response> searchBookByAuthorsName(@PathVariable("authorName") String authorName) {
+        return bookService.getBooksByAuthor(authorName);
+    }
+
+    @GetMapping(path = "/searchBook/year/{publishedYear}")
+    public ResponseEntity<Response> searchBookByPublishedYear(@PathVariable("publishedYear") String publishedYear) {
+        return bookService.getBooksByPublishedYear(publishedYear);
+    }
 }

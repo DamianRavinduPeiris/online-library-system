@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -52,21 +50,39 @@ public class BookServiceImpl implements BookService {
             return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books available!", null);
         } else {
             var bookDTOs = books.stream()
-                    .filter(book -> book.getAvailable_copies() > 0)
+                    .filter(book -> book.getAvailableCopies() > 0)
                     .map(book -> modelMapper.map(book, BookDTO.class))
                     .toList();
             return buildAndSendResponse(HttpStatus.OK, "Available books!", bookDTOs);
         }
     }
 
+    /*This method returns the books by author.*/
     @Override
     public ResponseEntity<Response> getBooksByAuthor(String authorName) {
-        return null;
+        var book = bookRepo.findByAuthor(authorName);
+        if (book.isEmpty()) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books found by this author!", null);
+        } else {
+            var bookDTOs = book.stream()
+                    .map(b -> modelMapper.map(b, BookDTO.class))
+                    .toList();
+            return buildAndSendResponse(HttpStatus.OK, "Books found by this author!", bookDTOs);
+        }
     }
 
+    /*This method returns the books by published year.*/
     @Override
     public ResponseEntity<Response> getBooksByPublishedYear(String publishedYear) {
-        return null;
+        var book = bookRepo.findByPublishedYear(publishedYear);
+        if (book.isEmpty()) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books found published in this year!", null);
+        } else {
+            var bookDTOs = book.stream()
+                    .map(b -> modelMapper.map(b, BookDTO.class))
+                    .toList();
+            return buildAndSendResponse(HttpStatus.OK, "Books found published in this year!", bookDTOs);
+        }
     }
 
     public ResponseEntity<Response> buildAndSendResponse(HttpStatus status, String message, Object data) {

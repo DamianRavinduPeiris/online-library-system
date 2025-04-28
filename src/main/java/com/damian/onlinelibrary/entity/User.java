@@ -19,7 +19,7 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private String created_at;
+    private String createdAt;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BorrowRecord> borrowRecords;
 }

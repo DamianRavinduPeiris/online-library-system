@@ -11,6 +11,6 @@ public class BookDTO implements Serializable {
     private String id;
     private String title;
     private String author;
-    private String published_year;
-    private int available_copies;
+    private String publishedYear;
+    private int availableCopies;
 }
