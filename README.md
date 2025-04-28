@@ -30,9 +30,6 @@ The goal of this project is to build an online library system that allows users 
 
 # Security Configuration
 
-
-
-
 The application uses **Spring Security** to manage authentication and authorization for its APIs. Below is a summary of the key features of the security setup:
 
 ### 1. CSRF Protection Disabled:
@@ -66,7 +63,7 @@ Predefined **in-memory users** with roles:
 This configuration ensures a separation of concerns and **role-based access control** for APIs, catering to both **public** and **secured** endpoints.
 
 
-## API Endpoints
+## API Endpoints (Refer **`postman_collection.json`** in the project root.)
 
 ### User Controller
 
