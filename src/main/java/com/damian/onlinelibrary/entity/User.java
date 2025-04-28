@@ -1,5 +1,6 @@
 package com.damian.onlinelibrary.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -21,5 +22,6 @@ public class User {
     private String email;
     private String createdAt;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<BorrowRecord> borrowRecords;
 }

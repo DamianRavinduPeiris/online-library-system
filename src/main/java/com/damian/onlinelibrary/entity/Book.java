@@ -1,5 +1,6 @@
 package com.damian.onlinelibrary.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -22,5 +23,6 @@ public class Book {
     private String publishedYear;
     private int availableCopies;
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<BorrowRecord> borrowRecords;
 }

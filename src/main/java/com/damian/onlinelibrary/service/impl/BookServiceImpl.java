@@ -2,9 +2,15 @@ package com.damian.onlinelibrary.service.impl;
 
 import com.damian.onlinelibrary.dto.BookDTO;
 import com.damian.onlinelibrary.entity.Book;
+import com.damian.onlinelibrary.entity.BorrowRecord;
+import com.damian.onlinelibrary.entity.User;
 import com.damian.onlinelibrary.repo.BookRepo;
+import com.damian.onlinelibrary.repo.BorrowRecordRepo;
+import com.damian.onlinelibrary.repo.UserRepo;
 import com.damian.onlinelibrary.response.Response;
 import com.damian.onlinelibrary.service.BookService;
+import com.damian.onlinelibrary.service.BorrowRecordService;
+import com.damian.onlinelibrary.service.enums.BorrowType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -18,6 +24,8 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final ModelMapper modelMapper;
     private final BookRepo bookRepo;
+    private final UserRepo userRepo;
+    private final BorrowRecordService borrowRecordService;
 
     @Override
     public ResponseEntity<Response> registerBook(BookDTO bookDTO) {
@@ -114,6 +122,47 @@ public class BookServiceImpl implements BookService {
                 .map(b -> modelMapper.map(b, BookDTO.class))
                 .toList();
         return buildAndSendResponse(HttpStatus.OK, "Books found!", bookDTOs);
+    }
+
+    @Override
+    public ResponseEntity<Response> borrowBook(String userId, String bookId) {
+        return processBookTransaction(userId, bookId, BorrowType.BORROW);
+    }
+
+    @Override
+    public ResponseEntity<Response> returnBook(String userId, String bookId) {
+        return processBookTransaction(userId, bookId, BorrowType.RETURN);
+    }
+
+    private ResponseEntity<Response> processBookTransaction(String userId, String bookId, BorrowType borrowType) {
+        var user = userRepo.findById(userId).orElse(null);
+        var book = bookRepo.findById(bookId).orElse(null);
+
+        if (user == null) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "User not found!", null);
+        }
+        if (book == null) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "Book not found!", null);
+        }
+
+        if (BorrowType.valueOf(BorrowType.BORROW.toString()) == borrowType) {
+            return borrowRecordService.borrowBook(user, book);
+        } else if (BorrowType.valueOf(BorrowType.RETURN.toString()) == borrowType) {
+            return borrowRecordService.returnBook(user, book);
+        }
+
+        return buildAndSendResponse(HttpStatus.BAD_REQUEST, "Invalid action!", null);
+    }
+
+    @Override
+    public ResponseEntity<Response> getBorrowRecordHistory(String userId) {
+        var user = userRepo.findById(userId).orElse(null);
+        if (user != null) {
+            return borrowRecordService.getUsersBorrowHistory(user);
+        } else {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "User not found!", null);
+
+        }
     }
 
     public ResponseEntity<Response> buildAndSendResponse(HttpStatus status, String message, Object data) {
