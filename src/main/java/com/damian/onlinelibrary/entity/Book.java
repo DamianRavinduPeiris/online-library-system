@@ -1,6 +1,7 @@
 package com.damian.onlinelibrary.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,6 @@ public class Book {
     private String author;
     private String published_year;
     private int available_copies;
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<BorrowRecord> borrowRecords;
 }
