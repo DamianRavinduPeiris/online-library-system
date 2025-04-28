@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -43,8 +45,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    /*This method returns all the books available for borrowing.*/
     public ResponseEntity<Response> getAvailableBooks() {
-        return null;
+        var books = bookRepo.findAll();
+        if (books.isEmpty()) {
+            return buildAndSendResponse(HttpStatus.NOT_FOUND, "No books available!", null);
+        } else {
+            var bookDTOs = books.stream()
+                    .filter(book -> book.getAvailable_copies() > 0)
+                    .map(book -> modelMapper.map(book, BookDTO.class))
+                    .toList();
+            return buildAndSendResponse(HttpStatus.OK, "Available books!", bookDTOs);
+        }
     }
 
     @Override

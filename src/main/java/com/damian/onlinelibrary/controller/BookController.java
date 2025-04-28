@@ -23,4 +23,9 @@ public class BookController {
     public ResponseEntity<Response> searchBook(@PathVariable("bookId") String bookId) {
         return bookService.searchBookByIdBook(bookId);
     }
+
+    @GetMapping(path = "/getAvailableBooks")
+    public ResponseEntity<Response> searchAvailableBooks() {
+        return bookService.getAvailableBooks();
+    }
 }
